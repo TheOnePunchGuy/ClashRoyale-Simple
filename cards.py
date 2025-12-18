@@ -1,13 +1,14 @@
 class Troop:
-    def __init__(self, hp, speed, damage, range, e_cost, special_ability=False):
+    def __init__(self, hp, speed, damage, range, e_cost, location, special_ability=False):
         self.hp = hp
         self.speed = speed
         self.damage = damage
         self.range = range
         self.e_cost = e_cost
-        self.range = range
         self.e_cost = e_cost
+        self.location = location
         self.special_ability = special_ability
+        
 
     def pathfinding(self):
         pass
@@ -28,6 +29,7 @@ class Troop:
         self.hp -= damage
         if self.hp <= 0:
             self.die()
+
 #Regular troops
 class Knight(Troop):
     def __init__(self, hp, speed, damage, range, e_cost, special_ability=False):
