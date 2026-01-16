@@ -81,30 +81,30 @@ def main():
 
             if event.type == pygame.MOUSEBUTTONDOWN: # mouse click
                 click_state = True
-                
-
                 # Check if a card in the deck is clicked
                 if screen.rect_1.collidepoint(event.pos):
                     selected_card = cards.deck[0]
                     click_state = False
-                if screen.rect_2.collidepoint(event.pos):
+                elif screen.rect_2.collidepoint(event.pos):
+
                     selected_card = cards.deck[1]
                     click_state = False
-                if screen.rect_3.collidepoint(event.pos):
+                elif screen.rect_3.collidepoint(event.pos):
                     selected_card = cards.deck[2]
                     click_state = False
-                if screen.rect_4.collidepoint(event.pos):
+                elif screen.rect_4.collidepoint(event.pos):
                     selected_card = cards.deck[3]
                     click_state = False
 
                 # card placement on arena
                 if click_state and selected_card:
+                    print(f'Placing card: {selected_card}')
                     mouse_x, mouse_y = event.pos
                     grid_x = mouse_x // TILE_SIZE
                     grid_y = mouse_y // TILE_SIZE
                     if grid_x <= 18 and grid_y <= 24: # inside arena
                         # new card instance
-                        new_card = type(selected_card)(
+                        new_card = selected_card(
                             x=grid_x * TILE_SIZE,
                             y=grid_y * TILE_SIZE,
                             is_friendly=True)
@@ -114,8 +114,7 @@ def main():
                             game.player_elixir.subtract_elixir(new_card)
                             
                             # card placement
-                            print(new_card.x, new_card.y)
-                            print("card placed")
+                            print(f'new_card.x: {new_card.x}, new_card.y: {new_card.y}')
                             cards.placed_card.append(new_card)
                     selected_card = None
                     click_state = False
@@ -134,9 +133,9 @@ def main():
 
         # card attacking
         for card in cards.placed_card:
+            print(f'card: {card}')
             card.pos = pygame.math.Vector2(card.x, card.y)
 
-    
             attacking = card.attack(cards.placed_card, now_attack)
             towers_down = game.Gamelogic().tower_down(pygame.time.get_ticks() // 1000)
 
@@ -145,19 +144,16 @@ def main():
 
             if not attacking:
                 if hasattr(card, 'move'):
-                    if card.x >= 8:
-                        towers_down = True #temp for testing
-                        if towers_down == True:
-                            card.x, card.y = card.move(card.x, card.y, 8, 1)
-                        else:
-                            card.x, card.y = card.move(card.x, card.y, 2, 5)
-                    elif card.x < 8:
-                        if towers_down == True:
-                            card.x, card.y = card.move(card.x, card.y, 9, 1)
-                        else:
-                            card.x, card.y = card.move(card.x, card.y, 15, 5)
-            
-            print(card.x // TILE_SIZE, card.y // TILE_SIZE)
+                    towers_down = True #temp for testing
+                    card.x, card.y = card.move(card.x, card.y, 8, 1)   
+                    print(card.x, card.y)
+                    #if card.x >= 8:
+                        #card.x, card.y = card.move(card.x, card.y, 8, 1)                        
+                        #card.x, card.y = card.move(card.x, card.y, 2, 5)
+                    #elif card.x < 8:
+                        #card.x, card.y = card.move(card.x, card.y, 9, 1)    
+                        #card.x, card.y = card.move(card.x, card.y, 15, 5)
+            print(f'x: {card.x // TILE_SIZE}, y: {card.y // TILE_SIZE}')
       
             screen.draw_cards(card, card.x, card.y)
 

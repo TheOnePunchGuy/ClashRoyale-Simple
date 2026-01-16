@@ -60,7 +60,6 @@ class Troop:
             self.x, self.y = self.move(self.x, self.y, int(enemy.x) // TILE_SIZE, int(enemy.y) // TILE_SIZE)
             self.pos = pygame.Vector2(enemy.x - self.x, enemy.y - self.y)
             if attack_range.colliderect(enemy.character_rect()):
-                print(now_attack)
                 if now_attack:
                     enemy.take_damage(self.damage, enemy)
                     now_attack = False
@@ -71,18 +70,17 @@ class Troop:
 
 
     def move(self, pos_x, pos_y, dest_x, dest_y):
-
+        print(f'Original: pos_x: {pos_x // TILE_SIZE}, pos_y: {pos_y // TILE_SIZE}, dest_x: {dest_x}, dest_y: {dest_y}')
+        
         path = self.pathfinding(int(pos_x // TILE_SIZE), int(pos_y // TILE_SIZE), dest_x, dest_y)
         
-
         if len(path) <= 1:
             return pos_x, pos_y
         
         endpos_x, endpos_y = path[1]
-        
+
         target_x = endpos_x * TILE_SIZE
         target_y = endpos_y * TILE_SIZE
-
         
         if pos_x < target_x:
             pos_x += self.speed
@@ -107,6 +105,8 @@ class Troop:
 
         self.pos = pygame.Vector2(dest_x - pos_x, dest_y - pos_y)
 
+        print(f'Final: pos_x: {pos_x // TILE_SIZE}, pos_y: {pos_y // TILE_SIZE}, dest_x: {dest_x}, dest_y: {dest_y}')
+        
         return pos_x, pos_y
 
     def use_ability(self):
@@ -181,7 +181,7 @@ class Giant(Tank):
         super().__init__(hp, speed, damage, range, attack_range, attack_cooldown, e_cost, x, y, card_png, card_animation, is_friendly, special_ability)
 
 class The_Guy(Tank):
-    def __init__(self, hp=10, speed=1, damage=1000, range=10, attack_range=5, attack_cooldown=1.5, e_cost=8, x=0, y=0, card_png=os.path.join(IMG_DIR, "Golem.png"), card_animation=None, is_friendly=None, special_ability=False):
+    def __init__(self, hp=10, speed=1, damage=1000, range=10, attack_range=5, attack_cooldown=1.5, e_cost=2, x=0, y=0, card_png=os.path.join(IMG_DIR, "Golem.png"), card_animation=None, is_friendly=None, special_ability=False):
         super().__init__(hp, speed, damage, range, attack_range, attack_cooldown, e_cost, x, y, card_png, card_animation, is_friendly, special_ability)
 
 # Buildings
@@ -308,7 +308,7 @@ player_ptower_right = Towers("Player_Tower", 1000, 50, 5, 5, 1.5, 15, 18, os.pat
 enemy_crown_tower = Crown_Tower("Enemy_Crown_Tower", 1500, 75, 7, 5, 1, 9, 21, os.path.join(ANI_DIR_TOWER_R, "King_Tower_Red.jpg"), False)
 player_crown_tower = Crown_Tower("Player_Crown_Tower", 1500, 75, 7, 5, 1.2, 9, 2, os.path.join(ANI_DIR_TOWER_R, "King_Tower_Blue.jpg"), True)
 
-deck = [Knight(), Archers(), Giant(), The_Guy()]
+deck = [Knight, Archers, Giant, The_Guy]
 enemy_deck = [Knight, Archers, Giant, The_Guy]
 placed_card = []
 enemy_placed = []

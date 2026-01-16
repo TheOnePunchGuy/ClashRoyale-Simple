@@ -31,7 +31,7 @@ class Elixir():
                 return self.elixir_count
 
     def can_subtract_elixir(self, card):
-        print(self.elixir_count)
+        print(f'self.elixir_count: {self.elixir_count}')
         #if elixir count is less than card cost, cannot play card
         if card.e_cost > self.elixir_count:
             return False

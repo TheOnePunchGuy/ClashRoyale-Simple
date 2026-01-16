@@ -37,22 +37,21 @@ def draw_elixir():
         
 #Set up deck on screen
 def draw_deck():
-    WINDOW.blit(deck[0].image_pathing(), (ARENA_WIDTH, 0))
+    WINDOW.blit(deck[0]().image_pathing(), (ARENA_WIDTH, 0))
     global rect_1
-    rect_1 = deck[0].image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
+    rect_1 = deck[0]().image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
 
-    WINDOW.blit(deck[1].image_pathing(), (ARENA_WIDTH, 142))
+    WINDOW.blit(deck[1]().image_pathing(), (ARENA_WIDTH, 142))
     global rect_2
-    rect_2 = deck[1].image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
+    rect_2 = deck[1]().image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
     
-    WINDOW.blit(deck[2].image_pathing(), (ARENA_WIDTH, 284))
+    WINDOW.blit(deck[2]().image_pathing(), (ARENA_WIDTH, 284))
     global rect_3
-    rect_3 = deck[2].image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
+    rect_3 = deck[2]().image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
 
-    WINDOW.blit(deck[3].image_pathing(), (ARENA_WIDTH, 426))
+    WINDOW.blit(deck[3]().image_pathing(), (ARENA_WIDTH, 426))
     global rect_4
-    rect_4 = deck[3].image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
-    #pygame.draw.rect(WINDOW, GREY, (ARENA_WIDTH, 0, 108, WINDOW_HEIGHT))
+    rect_4 = deck[3]().image_pathing().get_rect(topleft=(ARENA_WIDTH, 0))
 
 def draw_cards(selected_card, grid_x, grid_y):
     card_ani = selected_card.animation(selected_card)
